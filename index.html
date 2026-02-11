@@ -363,6 +363,102 @@
             font-weight: 500;
         }
 
+        /* BGS Timeline */
+        .bgs-timeline {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            padding: 0 40px;
+        }
+
+        .bgs-labels {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .bgs-label {
+            font-size: clamp(20px, 3.5vw, 36px);
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: color 0.4s ease, transform 0.4s ease, text-shadow 0.4s ease;
+            cursor: default;
+        }
+
+        .bgs-label.active {
+            color: var(--accent);
+            transform: scale(1.1);
+            text-shadow: 0 0 20px rgba(232, 168, 60, 0.4);
+        }
+
+        .bgs-label .first-letter {
+            transition: color 0.4s ease;
+        }
+
+        .bgs-label.active .first-letter {
+            color: var(--accent);
+        }
+
+        /* Grow card — engine reveal on hover */
+        .grow-parent {
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.5s ease,
+                filter 0.5s ease,
+                opacity 0.5s ease,
+                background 0.5s ease,
+                min-height 0.5s ease;
+        }
+
+        .engines-reveal {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease 0.1s,
+                margin-top 0.4s ease;
+            margin-top: 0;
+        }
+
+        .grow-parent:hover .engines-reveal,
+        .grow-parent.active .engines-reveal {
+            max-height: 400px;
+            opacity: 1;
+            margin-top: 20px;
+        }
+
+        .engine-card {
+            padding: 16px 20px;
+            border: 1px solid rgba(232, 168, 60, 0.25);
+            border-radius: 12px;
+            background: rgba(232, 168, 60, 0.05);
+            text-align: left;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .engine-card:hover {
+            border-color: var(--accent);
+            background: rgba(232, 168, 60, 0.1);
+        }
+
+        .engine-card h4 {
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .engine-card p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
         .segments-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -990,9 +1086,18 @@
         <canvas id="particles-canvas"></canvas>
         <div class="hero-content">
             <h1 class="hero-title">
-                What is
-                <span class="highlight">Dream<span class="sv-underline">SV</span>in?</span>
+                <span class="highlight">Build. Grow. Scale.</span>
             </h1>
+            <p class="hero-subtitle"
+                style="font-size: 1.4rem; color: var(--text-secondary); max-width: 600px; margin: 20px auto 0; line-height: 1.6;">
+                Growth,Engine,as a Service for Founders & Creators</p>
+            <p
+                style="font-size: 1rem; color: var(--text-muted); max-width: 550px; margin: 16px auto 0; line-height: 1.6;">
+                We work on your business and you, end-to-end building independent 360° growth from current revenue to
+                scale.</p>
+            <a href="#contact"
+                style="display: inline-block; margin-top: 32px; padding: 16px 40px; background: var(--accent); color: #000; font-weight: 700; border-radius: 50px; text-decoration: none; font-size: 1rem; transition: transform 0.3s, box-shadow 0.3s;">Build
+                Your Growth Engine</a>
         </div>
         <div class="scroll-prompt">
             <span>Scroll to find out</span>
@@ -1006,21 +1111,17 @@
          TRANSFORM SLIDER SECTION
     ========================================== -->
     <section class="transform-section reveal" id="transform">
-        <p class="transform-title">We transform your</p>
+        <p class="transform-title">What is <span style="color: var(--accent);">DreamSVin</span>?</p>
 
         <div class="slider-container">
-            <div class="slider-labels">
-                <span class="slider-label"><span class="first-letter">I</span>dea</span>
-                <span class="slider-middle">into</span>
-                <span class="slider-label"><span class="first-letter">B</span>rand</span>
-            </div>
-
-            <div class="slider-track">
-                <div class="slider-progress" id="sliderProgress"></div>
-                <div class="slider-dot" id="sliderDot"></div>
-            </div>
-
-            <p class="slider-tagline">through our <span>3C Model</span> — Content, Collaboration & Community</p>
+            <p
+                style="font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 20px; line-height: 1.8; text-align: center;">
+                DreamSVin is a 360° growth partner for founders and creators. We build independent growth engines that
+                help you scale beyond platforms, trends, or one-time campaigns.</p>
+            <p
+                style="font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto; line-height: 1.8; text-align: center;">
+                We work across strategy, execution, networks, and monetization,growing both the business and the
+                founder.</p>
         </div>
     </section>
 
@@ -1028,28 +1129,54 @@
          SEGMENTS SECTION (3C Model)
     ========================================== -->
     <section class="segments" id="services">
-        <p class="segments-intro reveal">We cater your brand curiosity through three segments</p>
+        <!-- Timeline -->
+        <div class="bgs-timeline reveal" id="bgsTimeline">
+            <div class="bgs-labels">
+                <span class="bgs-label active" data-step="build"><span class="first-letter">B</span>uild</span>
+                <span class="bgs-label" data-step="grow"><span class="first-letter">G</span>row</span>
+                <span class="bgs-label" data-step="scale"><span class="first-letter">S</span>cale</span>
+            </div>
+            <div class="slider-track">
+                <div class="slider-progress" id="bgsProgress"></div>
+                <div class="slider-dot" id="bgsDot"></div>
+            </div>
+            <p class="bgs-description" id="bgsDescription"
+                style="margin-top: 30px; font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin-left: auto; margin-right: auto; text-align: center; line-height: 1.6; transition: opacity 0.4s ease;">
+                We strengthen your current revenue, unlock new opportunities, and scale what works.</p>
+        </div>
 
         <div class="segments-grid">
-            <!-- Content Strategy -->
-            <div class="segment-tab reveal" data-tab="content">
-                <h3>Content Strategy</h3>
-                <p class="tab-detail">Craft compelling narratives that resonate with your audience. From ideation to
-                    execution, we build content that converts.</p>
+            <!-- BUILD -->
+            <div class="segment-tab reveal" data-tab="build">
+                <h3>Build</h3>
+                <p class="tab-detail">Business clarity, positioning, and revenue foundations.</p>
             </div>
 
-            <!-- Brand Collaboration -->
-            <div class="segment-tab reveal" data-tab="collab">
-                <h3>Brand Collaboration</h3>
-                <p class="tab-detail">Strategic partnerships that amplify your reach. We connect brands with the right
-                    partners for mutual growth.</p>
+            <!-- GROW (with nested engines) -->
+            <div class="segment-tab reveal grow-parent" data-tab="grow">
+                <h3>Grow</h3>
+                <p class="tab-detail">Growth is driven by three core engines:</p>
+                <!-- Engine cards revealed on hover -->
+                <div class="engines-reveal">
+                    <div class="engine-card">
+                        <h4>Content Engine</h4>
+                        <p>Builds authority, visibility, and inbound opportunities.</p>
+                    </div>
+                    <div class="engine-card">
+                        <h4>Community Engine</h4>
+                        <p>Turns audience into loyal ecosystem and advocates.</p>
+                    </div>
+                    <div class="engine-card">
+                        <h4>Collaboration Engine</h4>
+                        <p>Unlocks partnerships, distribution, and new revenue channels.</p>
+                    </div>
+                </div>
             </div>
 
-            <!-- Community Building -->
-            <div class="segment-tab reveal" data-tab="community">
-                <h3>Community Building</h3>
-                <p class="tab-detail">Build loyal communities that drive organic growth. We create spaces where your
-                    audience becomes your advocates.</p>
+            <!-- SCALE -->
+            <div class="segment-tab reveal" data-tab="scale">
+                <h3>Scale</h3>
+                <p class="tab-detail">Systems and growth engines that create repeatable and compounding results.</p>
             </div>
         </div>
     </section>
@@ -1090,9 +1217,9 @@
             </div>
 
             <div class="work-item reveal">
-                <video autoplay muted loop playsinline src="redfined-strategy.MOV"
+                <video autoplay muted loop playsinline src="redfined-strategy.mp4"
                     style="width:100%;height:350px;object-fit:cover;border-radius:8px;">
-                    <source src="redfined-strategy.MOV" type="video/mp4">
+                    <source src="redfined-strategy.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <p class="work-caption">Brand Collaboration | Strategy</p>
@@ -1143,8 +1270,11 @@
     ========================================== -->
     <section class="cta-section" id="contact">
         <p class="cta-text reveal">
-            Your vision. Our strategy. <span class="accent">DreamsVin</span> — where ideas become iconic brands.
+            Your vision. Our strategy. <span class="accent">DreamsVin</span> where ideas become iconic brands.
         </p>
+        <a href="mailto:grow@dreamsvin.com" class="reveal"
+            style="display: inline-block; margin-top: 24px; padding: 16px 40px; background: var(--accent); color: #000; font-weight: 700; border-radius: 50px; text-decoration: none; font-size: 1rem;">Build
+            Your Growth Engine</a>
     </section>
 
     <!-- ==========================================
@@ -1158,7 +1288,7 @@
                     <a href="#" class="logo">
                         Dream<span class="accent arrow-letter">S</span><span class="accent arrow-letter">V</span>in
                     </a>
-                    <p class="tagline">dreamsvin.com</p>
+                    <p class="tagline">Independent 360° Growth for Founders & Creators</p>
                 </div>
 
                 <!-- Explore Column -->
@@ -1499,29 +1629,32 @@
         });
 
         // ==========================================
-        // TRANSFORM SLIDER ANIMATION
+        // BUILD → GROW → SCALE TIMELINE ANIMATION
         // ==========================================
-        const sliderProgress = document.getElementById('sliderProgress');
-        const sliderDot = document.getElementById('sliderDot');
-        const transformSection = document.querySelector('.transform-section');
+        const bgsProgress = document.getElementById('bgsProgress');
+        const bgsDot = document.getElementById('bgsDot');
+        const bgsDescription = document.getElementById('bgsDescription');
+        const segmentsSection = document.querySelector('.segments');
+        const bgsLabels = document.querySelectorAll('.bgs-label');
 
-        function updateSlider() {
-            if (!transformSection || !sliderProgress || !sliderDot) return;
+        const bgsDescriptions = {
+            build: 'Business clarity, positioning, and revenue foundations.',
+            grow: 'Growth is driven by three core engines: Content, Community, and Collaboration.',
+            scale: 'Systems and growth engines that create repeatable and compounding results.'
+        };
 
-            const rect = transformSection.getBoundingClientRect();
+        function updateBGSTimeline() {
+            if (!segmentsSection || !bgsProgress || !bgsDot) return;
+
+            const rect = segmentsSection.getBoundingClientRect();
             const sectionTop = rect.top;
-            const sectionHeight = rect.height;
             const windowHeight = window.innerHeight;
 
-            // Calculate progress based on section position in viewport
-            // Start animation when section enters viewport, finish when top reaches middle of viewport
-            // Adjusted logic: Start when 85% down from top, End when 30% from top
             const startPoint = windowHeight * 0.85;
-            const endPoint = windowHeight * 0.3;
+            const endPoint = windowHeight * 0.15;
 
             let progress = 0;
 
-            // Adjusted logic
             if (sectionTop <= startPoint && sectionTop >= endPoint) {
                 progress = (startPoint - sectionTop) / (startPoint - endPoint);
             } else if (sectionTop < endPoint) {
@@ -1530,14 +1663,35 @@
                 progress = 0;
             }
 
-            // Apply to slider
             const percentage = progress * 100;
-            sliderProgress.style.width = percentage + '%';
-            sliderDot.style.left = percentage + '%';
+            bgsProgress.style.width = percentage + '%';
+            bgsDot.style.left = percentage + '%';
+
+            // Determine active step
+            let activeStep = 'build';
+            if (progress >= 0.66) {
+                activeStep = 'scale';
+            } else if (progress >= 0.33) {
+                activeStep = 'grow';
+            }
+
+            // Update labels
+            bgsLabels.forEach(label => {
+                if (label.dataset.step === activeStep) {
+                    label.classList.add('active');
+                } else {
+                    label.classList.remove('active');
+                }
+            });
+
+            // Update description text
+            if (bgsDescription) {
+                bgsDescription.textContent = bgsDescriptions[activeStep];
+            }
         }
 
-        window.addEventListener('scroll', updateSlider);
-        updateSlider(); // Initial call
+        window.addEventListener('scroll', updateBGSTimeline);
+        updateBGSTimeline();
 
         // ==========================================
         // SEGMENT TABS — Blur & Magnify Interaction
